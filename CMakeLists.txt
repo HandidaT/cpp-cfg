@@ -7,10 +7,10 @@ add_library(cpp-cfg INTERFACE)
 target_compile_features(cpp-cfg INTERFACE cxx_std_17)
 
 target_sources(cpp-cfg INTERFACE
-    ${CMAKE_SOURCE_DIR}/parseOptions.hpp
+    ${CMAKE_SOURCE_DIR}/config.hpp
 )
 
-add_executable(cfg testCfg.cpp)
+add_executable(cfg main.cpp)
 
 target_link_libraries(cfg PRIVATE cpp-cfg)
 
