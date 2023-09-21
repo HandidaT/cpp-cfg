@@ -1,19 +1,13 @@
 #include <iostream>
-#include <vector>
+#include <unordered_map>
 #include <fstream>
 #include <cstring>
 #include <string>
 
-typedef struct option
-{
-  std::string key;
-  std::string value;
-} option;
-
-inline std::vector<option> parse_options(char *szInFile)
+inline std::unordered_map<std::string, std::string> parse_options(char *szInFile)
 {
 
-  std::vector<option> options;
+  std::unordered_map<std::string, std::string> options;
   std::fstream file(szInFile, std::ios::in);
 
   if (!file.is_open())
@@ -37,7 +31,7 @@ inline std::vector<option> parse_options(char *szInFile)
     size_t endPos;
 
     if(commentStartPos < delimeterPos){
-      std::cerr << "Error : delimeter not found" << std::endl;
+      std::cerr << "Error : delimeter not found in line '" << line << "'" << std::endl;
       continue;
     }else{
       if(commentStartPos == std::string::npos){
@@ -49,17 +43,11 @@ inline std::vector<option> parse_options(char *szInFile)
 
     if (delimeterPos != std::string::npos)
     {
-      // Split the line at the first '=' character
-      option currentOption;
-      currentOption.key = line.substr(0, delimeterPos);
-      currentOption.value = line.substr(delimeterPos + 1, endPos);
-
-      std::cout << currentOption.key << " " << currentOption.value << std::endl;
-      options.push_back(currentOption);
+      options[line.substr(0, delimeterPos)] = line.substr(delimeterPos + 1, endPos);
     }
     else
     {
-      std::cerr << "No '=' character found in the line." << std::endl;
+      std::cerr << "No '=' character found in the line '" << line << "'" << std::endl;
     }
   }
 

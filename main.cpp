@@ -10,7 +10,9 @@ int main(int argc, char **argv) {
   auto options = parse_options(argv[1]);
 
   if(!options.empty()){
-    //use options
+    for(auto itm : options){
+      std::cout << itm.first << " " << itm.second << std::endl;
+    }
   }else{
     std::cout << "Empty options list";
   }
